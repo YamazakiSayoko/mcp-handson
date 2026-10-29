@@ -1,0 +1,20 @@
+# 秘密情報・環境依存
+.env
+.env.*
+!.env.example
+*.key
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# 実行時に生成されるデータ
+tickets.json
+
+# ツール類
+node_modules/
+
+# OS・Officeの一時ファイル
+.DS_Store
+Thumbs.db
+~$*
