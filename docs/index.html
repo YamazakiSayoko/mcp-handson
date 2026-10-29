@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>MCPハンズオン｜コピペ用コード集</title>
+<style>
+:root {
+  --text: #1f2328;
+  --muted: #5b6570;
+  --bg: #ffffff;
+  --panel: #f6f8fa;
+  --line: #d6dde4;
+  --blue: #0b5cad;
+  --blue-dark: #083f78;
+  --blue-soft: #eaf2fb;
+  --green: #1d7a35;
+  --green-soft: #ebf6ee;
+  --gray: #5f6a74;
+  --red: #b42318;
+  --amber-soft: #fff6df;
+  --amber-line: #e9c46a;
+  --sans: "Yu Gothic UI", "Meiryo", "Hiragino Sans", system-ui, sans-serif;
+  --mono: Consolas, "BIZ UDGothic", "BIZ UDゴシック", "MS Gothic", monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.75; }
+a { color: var(--blue); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px 80px; }
+.site-head { border-top: 6px solid var(--blue); border-bottom: 1px solid var(--line); }
+.site-head .wrap { padding-bottom: 22px; }
+h1 { margin: 28px 0 8px; color: var(--blue-dark); font-size: 28px; line-height: 1.4; }
+.lead { margin: 0; }
+h2 { font-size: 22px; line-height: 1.4; }
+code, kbd, pre { font-family: var(--mono); }
+p code, li code, h3 code { padding: 0 4px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); font-size: .92em; }
+kbd { display: inline-block; padding: 0 6px; border: 1px solid #b7c0c8; border-bottom-width: 2px; border-radius: 4px; background: #fff; font-size: .88em; line-height: 1.5; }
+
+.howto { margin: 28px 0; padding: 18px 22px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.howto h2 { margin: 0 0 8px; }
+.howto ol { margin: 0; padding-left: 1.4em; }
+.howto li { margin: 8px 0; }
+.howto ul { margin: 6px 0; padding-left: .2em; list-style: none; }
+.howto li.key { padding: 10px 14px; border: 2px solid var(--green); border-radius: 8px; background: #fff; }
+.tag { display: inline-block; min-width: 7.2em; margin-right: 8px; padding: 0 8px; border-radius: 999px; color: #fff; font-size: 13px; font-weight: 700; text-align: center; }
+.tag.ps { background: var(--blue); }
+.tag.py { background: var(--green); }
+.tag.in { background: var(--gray); }
+.examples { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; margin: 10px 0 6px; }
+.ex { margin: 0; overflow: hidden; border: 2px dashed; border-radius: 8px; background: #fff; }
+.ex.ok { border-color: var(--green); }
+.ex.ng { border-color: var(--red); }
+.ex figcaption { padding: 4px 12px; font-size: 14px; font-weight: 700; }
+.ex.ok figcaption { color: var(--green); }
+.ex.ng figcaption { color: var(--red); }
+.ex pre { background: var(--panel); }
+
+.toc { margin: 28px 0; padding: 16px 22px; border: 1px solid var(--line); border-radius: 10px; }
+.toc h2 { margin: 0 0 6px; }
+.toc ol { margin: 0; padding: 0; list-style: none; }
+.toc > ol > li { padding: 8px 0; border-top: 1px dashed var(--line); }
+.toc > ol > li:first-child { border-top: 0; }
+.toc .sec-link { font-weight: 700; }
+.toc .steps a { display: inline-block; margin: 4px 6px 0 0; padding: 0 10px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; text-decoration: none; }
+.toc .steps a:hover { background: var(--blue-soft); }
+
+.sec { margin-top: 44px; }
+.sec > h2 { margin: 0 0 6px; padding: 10px 16px; border-left: 6px solid var(--blue); border-radius: 4px; background: var(--blue-soft); scroll-margin-top: 12px; }
+.sec-intro { margin: 8px 0 0; color: var(--muted); }
+.step { padding: 20px 0 6px; border-bottom: 1px solid var(--line); scroll-margin-top: 12px; }
+.step h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0 0 6px; font-size: 19px; line-height: 1.5; }
+.step h3 .no { padding: 1px 10px; border-radius: 6px; background: var(--blue-dark); color: #fff; font-size: 14px; white-space: nowrap; }
+.place { margin: 0 0 10px; color: var(--muted); font-size: 15px; }
+.place .label { display: inline-block; margin-right: 8px; padding: 0 8px; border: 1px solid var(--muted); border-radius: 4px; font-size: 13px; }
+.where { margin: 14px 0 6px; padding: 8px 12px; border-radius: 6px; background: var(--green-soft); font-size: 15px; }
+.where .label { margin-right: 8px; color: var(--green); font-weight: 700; }
+.note { margin: 6px 0 10px; color: var(--muted); font-size: 15px; }
+.warn { margin: 8px 0 12px; padding: 8px 12px; border: 1px solid var(--amber-line); border-radius: 6px; background: var(--amber-soft); font-size: 15px; }
+.nocode { margin: 4px 0 12px; padding: 8px 12px; border: 1px dashed var(--line); border-radius: 6px; font-size: 15px; }
+.inline-steps { margin: 6px 0; padding-left: 1.6em; }
+.inline-steps li { margin: 4px 0; }
+
+.block { margin: 8px 0 16px; border: 1px solid var(--line); border-left: 5px solid var(--gray); border-radius: 6px; background: var(--panel); }
+.block.ps, .block.url { border-left-color: var(--blue); }
+.block.py { border-left-color: var(--green); }
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 6px 8px 6px 12px; border-bottom: 1px solid var(--line); border-radius: 0 6px 0 0; background: #fff; }
+.lang { padding: 0 10px; border-radius: 999px; background: var(--gray); color: #fff; font-size: 13px; font-weight: 700; }
+.ps .lang, .url .lang { background: var(--blue); }
+.py .lang { background: var(--green); }
+.cap { color: var(--muted); font-size: 14px; }
+.copy { min-width: 8.5em; margin-left: auto; padding: 3px 14px; border: 1px solid var(--blue); border-radius: 6px; background: #fff; color: var(--blue); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.copy:hover { background: var(--blue-soft); }
+.copy:focus-visible { outline: 3px solid #8cb8e8; outline-offset: 2px; }
+.copy.done { border-color: var(--green); background: var(--green); color: #fff; }
+.copy.fail { border-color: var(--red); background: #fff; color: var(--red); }
+pre { margin: 0; padding: 12px 16px; overflow-x: auto; font-size: 15px; line-height: 1.6; white-space: pre; tab-size: 4; }
+.block pre a { color: inherit; }
+.sample { margin: 8px 0 12px; border: 2px dashed var(--line); border-radius: 6px; }
+.sample .sample-cap { padding: 4px 12px; color: var(--muted); font-size: 14px; }
+.sample pre { background: var(--panel); }
+
+.totop { position: fixed; right: 18px; bottom: 18px; padding: 8px 16px; border-radius: 999px; background: var(--blue); color: #fff; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 2px 8px rgba(0, 0, 0, .18); }
+.totop:hover { background: var(--blue-dark); }
+.site-foot { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (max-width: 600px) {
+  .wrap { padding: 0 16px 80px; }
+  h1 { font-size: 23px; }
+}
+</style>
+</head>
+<body>
+<header class="site-head">
+<div class="wrap">
+<h1>MCPハンズオン｜コピペ用コード集</h1>
+<p class="lead">このページは、Claude API × MCPサーバー構築ハンズオンのコピペ用コード集です。PowerPoint教材の手順に沿って、必要なコマンドやコードをコピーして使用してください。</p>
+</div>
+</header>
+<main class="wrap">
+<noscript><p class="warn">JavaScript が無効なため、［コピー］ボタンは使えません。コードを選んで <kbd>Ctrl</kbd> + <kbd>C</kbd> でコピーしてください。</p></noscript>
+<section class="howto" id="howto" aria-labelledby="howto-title">
+<h2 id="howto-title">使い方</h2>
+<ol>
+<li>このページは、<strong>Azure VMの中のブラウザ</strong>で開いてください。手元のPCでコピーしても、VMには貼り付けられないことがあります。</li>
+<li>コードの右上の［コピー］を押すと、そのコードだけがコピーされます。貼り付けは <kbd>Ctrl</kbd> + <kbd>V</kbd> です。</li>
+<li>左上のラベルで、貼り付ける場所がわかります。
+<ul>
+<li><span class="tag ps">PowerShell</span>ターミナルに貼り付けて、<kbd>Enter</kbd> で実行します。1つずつ実行して、結果を確かめてから次へ進みます。</li>
+<li><span class="tag py">Python</span>VS Code の <code>server.py</code> に貼り付けます。</li>
+<li><span class="tag in">入力例</span>画面の入力欄に貼り付けます。</li>
+</ul>
+</li>
+<li id="indent" class="key"><strong>Python は「行のいちばん左」から貼り付けます。</strong><br>
+Python のコードは、行の先頭のスペース（字下げ）もいっしょにコピーされます。VS Code で行の最後で <kbd>Enter</kbd> を押すと、自動で字下げが入ります。そのまま貼り付けると字下げが二重になり、エラーになります。<kbd>Backspace</kbd> で字下げを消して、カーソルを行のいちばん左にしてから貼り付けてください。
+<div class="examples">
+<figure class="ex ok"><figcaption>○ 正しい（字下げはスペース4つ）</figcaption><pre>def search_faq(query: str) -&gt; str:
+    """社内ITヘルプデスクのFAQを検索する。"""
+    query_lower = query.lower()</pre></figure>
+<figure class="ex ng"><figcaption>× 字下げが二重（スペース8つ）→ エラーになる</figcaption><pre>def search_faq(query: str) -&gt; str:
+    """社内ITヘルプデスクのFAQを検索する。"""
+        query_lower = query.lower()</pre></figure>
+</div>
+貼り付けたら、左端の位置が上の行とそろっているか確かめましょう。</li>
+<li>APIキーは、このページには載っていません。講師から共有されたキーは、<code>.env</code> にだけ書いてください。</li>
+</ol>
+</section>
+<nav class="toc" id="toc" aria-labelledby="toc-title">
+<h2 id="toc-title">目次</h2>
+<ol>
+<li><a class="sec-link" href="#sec1">1. 環境準備・プロジェクト作成</a><div class="steps"><a href="#step1">STEP1</a> <a href="#step2">STEP2</a> <a href="#step3">STEP3</a> <a href="#step4">STEP4</a></div></li>
+<li><a class="sec-link" href="#sec2">2. MCPサーバーとpingツールの作成</a><div class="steps"><a href="#step5">STEP5</a> <a href="#step6">STEP6</a> <a href="#step7">STEP7</a> <a href="#step8">STEP8</a> <a href="#step9">STEP9</a> <a href="#step10">STEP10</a></div></li>
+<li><a class="sec-link" href="#sec3">3. FAQ検索ツールの実装</a><div class="steps"><a href="#faq-1">FAQ-1</a> <a href="#faq-2">FAQ-2</a> <a href="#faq-3">FAQ-3</a> <a href="#faq-4">FAQ-4</a> <a href="#faq-5">FAQ-5</a> <a href="#faq-6">FAQ-6</a> <a href="#faq-7">FAQ-7</a> <a href="#faq-8">FAQ-8</a> <a href="#faq-9">FAQ-9</a> <a href="#faq-10">FAQ-10</a></div></li>
+<li><a class="sec-link" href="#sec4">4. Claude API連携・Streamlit</a><div class="steps"><a href="#step11">STEP11</a> <a href="#step12">STEP12</a> <a href="#step13">STEP13</a> <a href="#step14">STEP14</a> <a href="#step15">STEP15</a> <a href="#step16-1">STEP16-①</a> <a href="#step16-2">STEP16-②</a></div></li>
+<li><a class="sec-link" href="#sec5">5. 付録：チケット登録と承認フロー</a><div class="steps"><a href="#a1-1">STEP1-1</a> <a href="#a1-2">STEP1-2</a> <a href="#a1-3">STEP1-3</a> <a href="#a-confirm">確認フロー</a></div></li>
+</ol>
+</nav>
+<section class="sec" aria-labelledby="sec1">
+<h2 id="sec1">1. 環境準備・プロジェクト作成</h2>
+<article class="step" id="step1">
+<h3><span class="no">STEP1</span><span>環境確認</span></h3>
+<p class="place"><span class="label">場所</span>Azure VM内のPowerShell（スタートメニューで「PowerShell」と入力して起動）</p>
+<div class="block ps" id="b-step1-a">
+<div class="bar"><span class="lang">PowerShell</span><span class="cap">Python のバージョンを表示</span><button type="button" class="copy" aria-label="STEP1のPowerShellをコピー">コピー</button></div>
+<pre><code>python --version</code></pre>
+</div>
+<div class="block ps" id="b-step1-b">
+<div class="bar"><span class="lang">PowerShell</span><span class="cap">Node.js のバージョンを表示</span><button type="button" class="copy" aria-label="STEP1のPowerShellをコピー">コピー</button></div>
+<pre><code>node --version</code></pre>
+</div>
+</article>
+<article class="step" id="step2">
+<h3><span class="no">STEP2</span><span>フォルダ作成・venv作成・有効化</span></h3>
+<p class="place"><span class="label">場所</span>Azure VM内のPowerShell（STEP1で開いたもの）。上から順番に実行します。</p>
+<div class="block ps" id="b-step2-a">
+<div class="bar"><span class="lang">PowerShell</span><span class="cap">デスクトップへ移動</span><button type="button" class="copy" aria-label="STEP2のPowerShellをコピー">コピー</button></div>
+<pre><code>cd ~\Desktop</code></pre>
+</div>
+<div class="block ps" id="b-step2-b">
+<div class="bar"><span class="lang">PowerShell</span><span class="cap">作業用フォルダを作成</span><button type="button" class="copy" aria-label="STEP2のPowerShellをコピー">コピー</button></div>
+<pre><code>mkdir mcp-helpdesk-agent</code></pre>
+</div>
+<div class="block ps" id="b-step2-c">
+<div class="bar"><span class="lang">PowerShell</span><span class="cap">作成したフォルダへ移動</span><button type="button" class="copy" aria-label="STEP2のPowerShellをコピー">コピー</button></div>
+<pre><code>cd mcp-helpdesk-agent</code></pre>
+</div>
+<div class="block ps" id="b-step2-d">
+<div class="bar"><span class="lang">PowerShell</span><span class="cap">Pythonの仮想環境を作成</span><button type="button" class="copy" aria-label="STEP2のPowerShellをコピー">コピー</button></div>
+<pre><code>python -m venv venv</code></pre>
+</div>
+<div class="block ps" id="b-step2-e">
+<div class="bar"><span class="lang">PowerShell</span><span class="cap">仮想環境を有効化</span><button type="button" class="copy" aria-label="STEP2のPowerShellをコピー">コピー</button></div>
+<pre><code>.\venv\Scripts\Activate.ps1</code></pre>
+</div>
+<p class="note">プロンプトの先頭に <code>(venv)</code> と表示されれば、仮想環境が有効になっています。</p>
+</article>
+<article class="step" id="step3">
+<h3><span class="no">STEP3</span><span>スターターキットをGitHubから入手する</span></h3>
+<p class="place"><span class="label">場所</span>Azure VM内のブラウザ（Edge）と、エクスプローラー</p>
+<ol class="inline-steps">
+<li>ブラウザで、次のURLを開きます（リンクをクリックすると、新しいタブで開きます）。
+<div class="block url" id="b-step3">
+<div class="bar"><span class="lang">URL</span><button type="button" class="copy" aria-label="STEP3のURLをコピー">コピー</button></div>
+<pre><code><a href="https://github.com/YamazakiSayoko/mcp-handson" target="_blank" rel="noopener">https://github.com/YamazakiSayoko/mcp-handson</a></code></pre>
+</div>
+</li>
+<li>緑色の［Code］ボタン →［Download ZIP］をクリックします。</li>
+<li>ダウンロードしたZIPを右クリック →「すべて展開」します。</li>
+<li>展開したフォルダの中の <code>starter_kit</code> を開きます。</li>
+<li>中身をすべてコピーして、デスクトップの <code>mcp-helpdesk-agent</code> フォルダに貼り付けます。</li>
+</ol>
+<p class="warn"><code>starter_kit</code> フォルダごとではなく、<strong>中身だけ</strong>をコピーしてください。</p>
+</article>
+<article class="step" id="step4">
+<h3><span class="no">STEP4</span><span>MCP SDKをインストールする</span></h3>
+<p class="place"><span class="label">場所</span>Azure VM内のPowerShell（<code>(venv)</code> が表示されている状態、<code>mcp-helpdesk-agent</code> フォルダ）</p>
+<div class="block ps" id="b-step4">
+<div class="bar"><span class="lang">PowerShell</span><button type="button" class="copy" aria-label="STEP4のPowerShellをコピー">コピー</button></div>
+<pre><code>pip install -r requirements.txt</code></pre>
+</div>
+<p class="note">ここから少し時間がかかります。<code>Successfully installed ...</code> と表示されれば完了です。</p>
+</article>
+</section>
+<section class="sec" aria-labelledby="sec2">
+<h2 id="sec2">2. MCPサーバーとpingツールの作成</h2>
+<article class="step" id="step5">
+<h3><span class="no">STEP5</span><span>server.py の土台を作る</span></h3>
+<p class="place"><span class="label">場所</span>PowerShell と VS Code</p>
+<div class="block ps" id="b-step5-ps">
+<div class="bar"><span class="lang">PowerShell</span><span class="cap">VS Code で、いまのフォルダ（mcp-helpdesk-agent）を開く</span><button type="button" class="copy" aria-label="STEP5のPowerShellをコピー">コピー</button></div>
+<pre><code>code .</code></pre>
+</div>
+<p>VS Code で、新しいファイル <code>server.py</code> を作ります（<code>agent_core.py</code> や <code>faq_data.py</code> と同じ場所）。</p>
+<p class="where"><span class="label">貼り付ける位置</span>作った <code>server.py</code>（空のファイル）に貼り付けます。</p>
+<div class="block py" id="b-step5-py" data-newline="1">
+<div class="bar"><span class="lang">Python</span><button type="button" class="copy" aria-label="STEP5のPythonをコピー">コピー</button></div>
+<pre><code>from mcp.server.mcpserver import MCPServer
+
+mcp = MCPServer("it-helpdesk-server")</code></pre>
+</div>
+<p class="note"><kbd>Ctrl</kbd> + <kbd>S</kbd> で保存します。</p>
+</article>
+<article class="step" id="step6">
+<h3><span class="no">STEP6</span><span>最初のツール「ping」を追加する①：形を作る</span></h3>
+<p class="place"><span class="label">場所</span>VS Code の <code>server.py</code></p>
+<p class="where"><span class="label">貼り付ける位置</span><code>server.py</code> のいちばん下（<code>mcp = MCPServer("it-helpdesk-server")</code> の下）に追加します。</p>
+<div class="block py" id="b-step6" data-newline="1">
+<div class="bar"><span class="lang">Python</span><button type="button" class="copy" aria-label="STEP6のPythonをコピー">コピー</button></div>
+<pre><code>@mcp.tool()
+def ping(message: str) -&gt; str:
+    """接続確認用のテストツール。渡した文字列をそのまま返す。"""</code></pre>
+</div>
+</article>
+<article class="step" id="step7">
+<h3><span class="no">STEP7</span><span>最初のツール「ping」を追加する②：完成させる</span></h3>
+<p class="place"><span class="label">場所</span>VS Code の <code>server.py</code></p>
+<p class="where"><span class="label">貼り付ける位置</span>ping 関数の説明文（<code>"""接続確認用のテストツール。…"""</code>）の次の行に追加します。</p>
+<div class="block py" id="b-step7-a" data-newline="1">
+<div class="bar"><span class="lang">Python</span><span class="cap">ping 関数の中の return 文</span><button type="button" class="copy" aria-label="STEP7のPythonをコピー">コピー</button></div>
+<pre><code>    return f"pong: {message}"</code></pre>
+</div>
+<p class="where"><span class="label">貼り付ける位置</span><code>server.py</code> のいちばん下に追加します。</p>
+<div class="block py" id="b-step7-b" data-newline="1">
+<div class="bar"><span class="lang">Python</span><span class="cap">サーバーを起動する部分</span><button type="button" class="copy" aria-label="STEP7のPythonをコピー">コピー</button></div>
+<pre><code>if __name__ == "__main__":
+    mcp.run()</code></pre>
+</div>
+<p class="note"><kbd>Ctrl</kbd> + <kbd>S</kbd> で保存します。</p>
+</article>
+<article class="step" id="step8">
+<h3><span class="no">STEP8</span><span>構文を確認する</span></h3>
+<p class="place"><span class="label">場所</span>Azure VM内のPowerShell（<code>(venv)</code> が表示されている状態、<code>mcp-helpdesk-agent</code> フォルダ）</p>
+<div class="block ps" id="b-step8">
+<div class="bar"><span class="lang">PowerShell</span><button type="button" class="copy" aria-label="STEP8のPowerShellをコピー">コピー</button></div>
+<pre><code>python -m py_compile server.py</code></pre>
+</div>
+<p class="note">何も表示されずに終われば、構文エラーはありません。エラーが出たら、多くは字下げのずれです（<a href="#indent">使い方の4</a>）。<code>server.py</code> を保存してから実行してください。</p>
+</article>
+<article class="step" id="step9">
+<h3><span class="no">STEP9</span><span>MCP Inspectorを起動する</span></h3>
+<p class="place"><span class="label">場所</span>Azure VM内のPowerShell（<code>(venv)</code> が表示されている状態、<code>mcp-helpdesk-agent</code> フォルダ）</p>
+<div class="block ps" id="b-step9">
+<div class="bar"><span class="lang">PowerShell</span><button type="button" class="copy" aria-label="STEP9のPowerShellをコピー">コピー</button></div>
+<pre><code>npx @modelcontextprotocol/inspector python server.py</code></pre>
+</div>
+<p class="note">初回に「Need to install the following packages」と聞かれたら、<kbd>y</kbd> を入力して <kbd>Enter</kbd> を押します。</p>
+<p class="note">このPowerShellは、Inspector が動いている間ふさがります。このあとのコマンドは、VS Code のターミナルで実行します。</p>
+</article>
+<article class="step" id="step10">
+<h3><span class="no">STEP10</span><span>接続してpingを実行する</span></h3>
+<p class="place"><span class="label">場所</span>VM内のブラウザの MCP Inspector の画面</p>
+<p class="nocode">コピーするものはありません。スイッチを ON にして接続し、［Tools］タブの <code>ping</code> を選びます。Message 欄に文字を入力して［Execute Tool］を押し、<code>pong: 〇〇</code> と表示されれば OK です。</p>
+</article>
+</section>
+<section class="sec" aria-labelledby="sec3">
+<h2 id="sec3">3. FAQ検索ツールの実装</h2>
+<article class="step" id="faq-1">
+<h3><span class="no">FAQ-1</span><span>search_faq関数の土台を作る</span></h3>
+<p class="place"><span class="label">場所</span>VS Code の <code>server.py</code></p>
+<p class="where"><span class="label">貼り付ける位置</span>上のほうの <code>from mcp.server.mcpserver import MCPServer</code> の次の行に追加します。</p>
+<div class="block py" id="b-faq1-a" data-newline="1">
+<div class="bar"><span class="lang">Python</span><span class="cap">FAQデータを読み込む</span><button type="button" class="copy" aria-label="FAQ-1のPythonをコピー">コピー</button></div>
+<pre><code>from faq_data import FAQ_DATA</code></pre>
+</div>
+<p class="where"><span class="label">貼り付ける位置</span>ping 関数の下、<code>if __name__ == "__main__":</code> の上に追加します。<code>if __name__ …</code> の行のいちばん左にカーソルを置いて貼り付けると、その上に入ります。</p>
+<div class="block py" id="b-faq1-b" data-newline="1">
+<div class="bar"><span class="lang">Python</span><span class="cap">search_faq 関数の土台</span><button type="button" class="copy" aria-label="FAQ-1のPythonをコピー">コピー</button></div>
+<pre><code>@mcp.tool()
+def search_faq(query: str) -&gt; str:
+    """社内ITヘルプデスクのFAQを検索する。"""</code></pre>
+</div>
+</article>
+<article class="step" id="faq-2">
+<h3><span class="no">FAQ-2</span><span>クエリを小文字に変換する（検索文字列を小文字に変換する）</span></h3>
+<p class="place"><span class="label">場所</span>VS Code の <code>server.py</code></p>
+<p class="where"><span class="label">貼り付ける位置</span>search_faq の説明文（<code>"""社内ITヘルプデスクのFAQを検索する。"""</code>）の次の行に追加します。</p>
+<div class="block py" id="b-faq2" data-newline="1">
+<div class="bar"><span class="lang">Python</span><button type="button" class="copy" aria-label="FAQ-2のPythonをコピー">コピー</button></div>
+<pre><code>    query_lower = query.lower()</code></pre>
+</div>
+</article>
+<article class="step" id="faq-3">
+<h3><span class="no">FAQ-3</span><span>FAQデータから一致するものを検索する</span></h3>
+<p class="place"><span class="label">場所</span>VS Code の <code>server.py</code></p>
+<p class="where"><span class="label">貼り付ける位置</span>FAQ-2 で追加した <code>query_lower = query.lower()</code> の次の行に追加します。</p>
+<div class="block py" id="b-faq3" data-newline="1">
+<div class="bar"><span class="lang">Python</span><button type="button" class="copy" aria-label="FAQ-3のPythonをコピー">コピー</button></div>
+<pre><code>    matched = [
+        entry for entry in FAQ_DATA
+        if any(keyword.lower() in query_lower for keyword in entry["keywords"])
+    ]</code></pre>
+</div>
+</article>
+<article class="step" id="faq-4">
+<h3><span class="no">FAQ-4</span><span>該当するFAQがなかった場合</span></h3>
+<p class="place"><span class="label">場所</span>VS Code の <code>server.py</code></p>
+<p class="where"><span class="label">貼り付ける位置</span>FAQ-3 で追加した <code>matched = [</code> 〜 <code>]</code> の次の行に追加します。</p>
+<div class="block py" id="b-faq4" data-newline="1">
+<div class="bar"><span class="lang">Python</span><button type="button" class="copy" aria-label="FAQ-4のPythonをコピー">コピー</button></div>
+<pre><code>    if not matched:
+        return "該当するFAQが見つかりませんでした。情報システム部のヘルプデスクへお問い合わせください。"</code></pre>
+</div>
+</article>
+<article class="step" id="faq-5">
+<h3><span class="no">FAQ-5</span><span>該当するFAQを整形して返す</span></h3>
+<p class="place"><span class="label">場所</span>VS Code の <code>server.py</code></p>
+<p class="where"><span class="label">貼り付ける位置</span>FAQ-4 で追加した <code>if not matched:</code> の2行の、次の行に追加します。</p>
+<div class="block py" id="b-faq5" data-newline="1">
+<div class="bar"><span class="lang">Python</span><button type="button" class="copy" aria-label="FAQ-5のPythonをコピー">コピー</button></div>
+<pre><code>    results = [
+        f"【{entry['category']}】{entry['question']}\n{entry['answer']}"
+        for entry in matched
+    ]
+    return "\n\n".join(results)</code></pre>
+</div>
+</article>
+<article class="step" id="faq-6">
+<h3><span class="no">FAQ-6</span><span>search_faq の説明文（docstring）を詳しくする</span></h3>
+<p class="place"><span class="label">場所</span>VS Code の <code>server.py</code></p>
+<p class="where"><span class="label">貼り付ける位置</span>search_faq の今の説明文（<code>"""社内ITヘルプデスクのFAQを検索する。"""</code> の1行）と置き換えます。その行の行番号（左端の数字）をクリックして行全体を選んでから、貼り付けてください。</p>
+<div class="block py" id="b-faq6" data-newline="1">
+<div class="bar"><span class="lang">Python</span><button type="button" class="copy" aria-label="FAQ-6のPythonをコピー">コピー</button></div>
+<pre><code>    """社内ITヘルプデスクのFAQを検索する。
+
+    VPN接続、パスワードのリセット、社内Wi-Fi接続など、よくある社内IT問い合わせ
+    について、ユーザーの質問文(query)に関連するFAQが見つかれば、その対処方法を返す。
+    該当するFAQが見つからない場合は、その旨を伝える文字列を返す。
+
+    例: 「VPNにつながらない」「パスワードを忘れた」「Wi-Fiに接続できない」
+    """</code></pre>
+</div>
+</article>
+<article class="step" id="faq-7">
+<h3><span class="no">FAQ-7</span><span>完成したsearch_faqを保存・確認する</span></h3>
+<p class="place"><span class="label">場所</span>VS Code のターミナル（［ターミナル］→［新しいターミナル］）</p>
+<p class="note">先に、VS Code で <code>server.py</code> を保存（<kbd>Ctrl</kbd> + <kbd>S</kbd>）します。</p>
+<div class="block ps" id="b-faq7">
+<div class="bar"><span class="lang">PowerShell</span><button type="button" class="copy" aria-label="FAQ-7のPowerShellをコピー">コピー</button></div>
+<pre><code>python -m py_compile server.py</code></pre>
+</div>
+<p class="note">エラーが出なければ完成です。エラーが出たら、字下げを確認してください（<a href="#indent">使い方の4</a>）。</p>
+</article>
+<article class="step" id="faq-8">
+<h3><span class="no">FAQ-8</span><span>Inspectorでサーバーを再起動する</span></h3>
+<p class="place"><span class="label">場所</span>VM内のブラウザの MCP Inspector の画面（［Servers］タブ）</p>
+<p class="nocode">コピーするものはありません。python サーバーのトグルを一度 OFF にして、もう一度 ON にします。［Tools］タブに <code>ping</code> と <code>search_faq</code> の2つが出れば成功です。</p>
+</article>
+<article class="step" id="faq-9">
+<h3><span class="no">FAQ-9</span><span>search_faqを実行する（該当あり）</span></h3>
+<p class="place"><span class="label">場所</span>MCP Inspector の［Tools］タブ（<code>search_faq</code> を選び、query 欄に貼り付けて［Execute Tool］）</p>
+<div class="block in" id="b-faq9-a">
+<div class="bar"><span class="lang">入力例</span><span class="cap">まずはこれ</span><button type="button" class="copy" aria-label="FAQ-9の入力例をコピー">コピー</button></div>
+<pre><code>VPNにつながらない</code></pre>
+</div>
+<div class="block in" id="b-faq9-b">
+<div class="bar"><span class="lang">入力例</span><button type="button" class="copy" aria-label="FAQ-9の入力例をコピー">コピー</button></div>
+<pre><code>パスワードを忘れた</code></pre>
+</div>
+<div class="block in" id="b-faq9-c">
+<div class="bar"><span class="lang">入力例</span><button type="button" class="copy" aria-label="FAQ-9の入力例をコピー">コピー</button></div>
+<pre><code>Wi-Fiに接続できない</code></pre>
+</div>
+</article>
+<article class="step" id="faq-10">
+<h3><span class="no">FAQ-10</span><span>search_faqを実行する（該当なし）</span></h3>
+<p class="place"><span class="label">場所</span>MCP Inspector の［Tools］タブ（<code>search_faq</code> を選び、query 欄に貼り付けて［Execute Tool］）</p>
+<div class="block in" id="b-faq10">
+<div class="bar"><span class="lang">入力例</span><button type="button" class="copy" aria-label="FAQ-10の入力例をコピー">コピー</button></div>
+<pre><code>プリンターが壊れた</code></pre>
+</div>
+<p class="note">「該当するFAQが見つかりませんでした」という案内が返ってくれば OK です。</p>
+</article>
+</section>
+<section class="sec" aria-labelledby="sec4">
+<h2 id="sec4">4. Claude API連携・Streamlit</h2>
+<article class="step" id="step11">
+<h3><span class="no">STEP11</span><span>.env を作成してAPIキーを設定する</span></h3>
+<p class="place"><span class="label">場所</span>VS Code のターミナル（<code>mcp-helpdesk-agent</code> フォルダ）</p>
+<div class="block ps" id="b-step11-a">
+<div class="bar"><span class="lang">PowerShell</span><span class="cap">① 見本の .env.example をコピーして、.env を作る</span><button type="button" class="copy" aria-label="STEP11のPowerShellをコピー">コピー</button></div>
+<pre><code>Copy-Item .env.example .env</code></pre>
+</div>
+<div class="block ps" id="b-step11-b">
+<div class="bar"><span class="lang">PowerShell</span><span class="cap">② VS Code で .env を開く</span><button type="button" class="copy" aria-label="STEP11のPowerShellをコピー">コピー</button></div>
+<pre><code>code .env</code></pre>
+</div>
+<p>③ 開いた <code>.env</code> の <code>your-api-key-here</code> の部分を、講師から共有されたキーに置き換えて、保存（<kbd>Ctrl</kbd> + <kbd>S</kbd>）します。</p>
+<div class="sample"><div class="sample-cap">.env の見本（このページにキーは載せていません）</div><pre>ANTHROPIC_API_KEY=your-api-key-here</pre></div>
+<p class="warn">キーの前後に、空白や引用符を入れないでください。<code>.env</code> の中身は、画面共有やスクリーンショットに写さないでください。</p>
+</article>
+<article class="step" id="step12">
+<h3><span class="no">STEP12</span><span>ターミナルからClaudeに質問する</span></h3>
+<p class="place"><span class="label">場所</span>VS Code のターミナル（<code>mcp-helpdesk-agent</code> フォルダ）</p>
+<div class="block ps" id="b-step12-a">
+<div class="bar"><span class="lang">PowerShell</span><span class="cap">先頭に (venv) が付いていないときだけ実行</span><button type="button" class="copy" aria-label="STEP12のPowerShellをコピー">コピー</button></div>
+<pre><code>.\venv\Scripts\Activate.ps1</code></pre>
+</div>
+<div class="block ps" id="b-step12-b">
+<div class="bar"><span class="lang">PowerShell</span><button type="button" class="copy" aria-label="STEP12のPowerShellをコピー">コピー</button></div>
+<pre><code>python client.py</code></pre>
+</div>
+<p class="note">質問（「VPNにつながらないんだけど、どうすればいい？」）は <code>client.py</code> の中に書いてあるので、入力するものはありません。</p>
+</article>
+<article class="step" id="step13">
+<h3><span class="no">STEP13</span><span>StreamlitでブラウザUIを起動する</span></h3>
+<p class="place"><span class="label">場所</span>VS Code のターミナル（<code>mcp-helpdesk-agent</code> フォルダ）</p>
+<div class="block ps" id="b-step13">
+<div class="bar"><span class="lang">PowerShell</span><button type="button" class="copy" aria-label="STEP13のPowerShellをコピー">コピー</button></div>
+<pre><code>streamlit run app.py</code></pre>
+</div>
+<p class="note">初回にメールアドレスの登録を求められたら、空欄のまま <kbd>Enter</kbd> で進めます。VM内のブラウザで、<code>http://localhost:8501</code> のチャット画面が開きます。</p>
+<p class="note">このターミナルは、Streamlit が動いている間ふさがります。止めるときは <kbd>Ctrl</kbd> + <kbd>C</kbd> です。</p>
+</article>
+<article class="step" id="step14">
+<h3><span class="no">STEP14</span><span>ブラウザで質問してみる（該当あり）</span></h3>
+<p class="place"><span class="label">場所</span>VM内のブラウザのチャット画面（Streamlit）の入力欄に貼り付けて送信</p>
+<div class="block in" id="b-step14">
+<div class="bar"><span class="lang">入力例</span><button type="button" class="copy" aria-label="STEP14の入力例をコピー">コピー</button></div>
+<pre><code>VPNにつながらない</code></pre>
+</div>
+</article>
+<article class="step" id="step15">
+<h3><span class="no">STEP15</span><span>ブラウザで質問してみる（該当なし）</span></h3>
+<p class="place"><span class="label">場所</span>VM内のブラウザのチャット画面（Streamlit）の入力欄に貼り付けて送信</p>
+<div class="block in" id="b-step15">
+<div class="bar"><span class="lang">入力例</span><button type="button" class="copy" aria-label="STEP15の入力例をコピー">コピー</button></div>
+<pre><code>プリンターが壊れた</code></pre>
+</div>
+</article>
+<article class="step" id="step16-1">
+<h3><span class="no">STEP16-①</span><span>ブラウザで質問してみる（遠回しな質問）</span></h3>
+<p class="place"><span class="label">場所</span>VM内のブラウザのチャット画面（Streamlit）の入力欄に貼り付けて送信</p>
+<div class="block in" id="b-step16-1">
+<div class="bar"><span class="lang">入力例</span><button type="button" class="copy" aria-label="STEP16-①の入力例をコピー">コピー</button></div>
+<pre><code>在宅勤務で会社のシステムにアクセスできない</code></pre>
+</div>
+</article>
+<article class="step" id="step16-2">
+<h3><span class="no">STEP16-②</span><span>MCP Inspector にも質問してみる（遠回しな質問）</span></h3>
+<p class="place"><span class="label">場所</span>MCP Inspector の［Tools］タブ（<code>search_faq</code> を選び、query 欄に貼り付けて［Execute Tool］）</p>
+<div class="block in" id="b-step16-2">
+<div class="bar"><span class="lang">入力例</span><button type="button" class="copy" aria-label="STEP16-②の入力例をコピー">コピー</button></div>
+<pre><code>在宅勤務で会社のシステムにアクセスできない</code></pre>
+</div>
+</article>
+</section>
+<section class="sec" aria-labelledby="sec5">
+<h2 id="sec5">5. 付録：チケット登録と承認フロー</h2>
+<p class="sec-intro">研修の時間外・持ち帰りの発展課題です。<code>server.py</code> に、問い合わせをチケットとして登録する <code>register_ticket</code> ツールを追加します。</p>
+<article class="step" id="a1-1">
+<h3><span class="no">STEP1-1</span><span>register_ticketツールを追加する（import文を追加する）</span></h3>
+<p class="place"><span class="label">場所</span>VS Code の <code>server.py</code></p>
+<p class="where"><span class="label">貼り付ける位置</span><code>server.py</code> のいちばん上に追加します。1行目のいちばん左にカーソルを置いて貼り付けると、その上に入ります。</p>
+<div class="block py" id="b-a1-1" data-newline="1">
+<div class="bar"><span class="lang">Python</span><button type="button" class="copy" aria-label="STEP1-1のPythonをコピー">コピー</button></div>
+<pre><code>import json
+from datetime import datetime, timezone
+from pathlib import Path</code></pre>
+</div>
+</article>
+<article class="step" id="a1-2">
+<h3><span class="no">STEP1-2</span><span>register_ticketツールを追加する（保存先を定義する）</span></h3>
+<p class="place"><span class="label">場所</span>VS Code の <code>server.py</code></p>
+<p class="where"><span class="label">貼り付ける位置</span><code>mcp = MCPServer("it-helpdesk-server")</code> の次の行に追加します。</p>
+<div class="block py" id="b-a1-2" data-newline="1">
+<div class="bar"><span class="lang">Python</span><button type="button" class="copy" aria-label="STEP1-2のPythonをコピー">コピー</button></div>
+<pre><code>TICKETS_FILE = Path(__file__).parent / "tickets.json"</code></pre>
+</div>
+<p class="note"><code>server.py</code> と同じフォルダに <code>tickets.json</code> というファイルを保存する設定です。<code>tickets.json</code> は、実際にチケットを登録したときに作られます。</p>
+</article>
+<article class="step" id="a1-3">
+<h3><span class="no">STEP1-3</span><span>register_ticketツールを追加する（register_ticket関数を追加する）</span></h3>
+<p class="place"><span class="label">場所</span>VS Code の <code>server.py</code></p>
+<p class="where"><span class="label">貼り付ける位置</span>search_faq 関数の下、<code>if __name__ == "__main__":</code> の上に追加します。<code>if __name__ …</code> の行のいちばん左にカーソルを置いて貼り付けると、その上に入ります。</p>
+<div class="block py" id="b-a1-3" data-newline="1">
+<div class="bar"><span class="lang">Python</span><button type="button" class="copy" aria-label="STEP1-3のPythonをコピー">コピー</button></div>
+<pre><code>@mcp.tool()
+def register_ticket(category: str, description: str) -&gt; str:
+    """問い合わせ内容をヘルプデスクのチケットとして登録する。"""
+    tickets = []
+    if TICKETS_FILE.exists():
+        tickets = json.loads(TICKETS_FILE.read_text(encoding="utf-8"))
+    new_ticket = {
+        "id": len(tickets) + 1,
+        "category": category,
+        "description": description,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    }
+    tickets.append(new_ticket)
+    TICKETS_FILE.write_text(
+        json.dumps(tickets, ensure_ascii=False, indent=2),
+        encoding="utf-8"
+    )
+    return f"チケットを登録しました（チケット番号: {new_ticket['id']}）"</code></pre>
+</div>
+</article>
+<article class="step" id="a-confirm">
+<h3><span>確認フローの動作イメージ</span></h3>
+<p class="place"><span class="label">場所</span>VM内のブラウザのチャット画面（Streamlit）の入力欄に貼り付けて送信</p>
+<div class="block in" id="b-a-confirm">
+<div class="bar"><span class="lang">入力例</span><button type="button" class="copy" aria-label="確認フローの入力例をコピー">コピー</button></div>
+<pre><code>チケットを登録してください。
+カテゴリはVPN、内容は自宅からVPNに接続できない</code></pre>
+</div>
+<p class="note">［✅ 登録する］を押したときだけ、MCPサーバーのツールが実行されて <code>tickets.json</code> に保存されます。［❌ キャンセル］を押した場合、ツールは実行されません。</p>
+<p class="note">VS Code で <code>tickets.json</code> を開くと、登録した内容が保存されています。</p>
+<p class="note">新しいツールが使われないときは、Streamlit を <kbd>Ctrl</kbd> + <kbd>C</kbd> で止めて、もう一度 <code>streamlit run app.py</code> を実行します。</p>
+</article>
+</section>
+<footer class="site-foot">
+<p>コード一式（スターターキットと完成版）は、<a href="https://github.com/YamazakiSayoko/mcp-handson" target="_blank" rel="noopener">GitHub の YamazakiSayoko/mcp-handson</a> にあります。</p>
+<p>このページに、APIキーなどの秘密の情報は載っていません。</p>
+</footer>
+</main>
+<a class="totop" href="#toc">▲ 目次</a>
+<p id="copy-live" class="sr-only" aria-live="polite"></p>
+<script>
+(function () {
+  "use strict";
+  var live = document.getElementById("copy-live");
+
+  // 古いブラウザや、クリップボードの機能が使えないときの予備
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.top = "0";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(
+        function () { return true; },
+        function () { return fallbackCopy(text); }
+      );
+    }
+    return Promise.resolve(fallbackCopy(text));
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".block .copy"), function (btn) {
+    btn.addEventListener("click", function () {
+      var block = btn.closest(".block");
+      var code = block.querySelector("pre code");
+      // 表示しているコードをそのままコピーする。Python だけ、最後に改行を1つ付ける
+      var text = code.textContent + (block.getAttribute("data-newline") === "1" ? "\n" : "");
+      copyText(text).then(function (ok) {
+        clearTimeout(btn._timer);
+        btn.classList.remove("done", "fail");
+        if (ok) {
+          btn.textContent = "コピーしました";
+          btn.classList.add("done");
+          live.textContent = "コピーしました";
+        } else {
+          btn.textContent = "コピーできませんでした";
+          btn.classList.add("fail");
+          window.getSelection().selectAllChildren(code);
+          live.textContent = "コピーできませんでした。選んだコードを Ctrl + C でコピーしてください。";
+        }
+        btn._timer = setTimeout(function () {
+          btn.textContent = "コピー";
+          btn.classList.remove("done", "fail");
+        }, 2000);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
