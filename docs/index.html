@@ -132,7 +132,7 @@ pre { margin: 0; padding: 12px 16px; overflow-x: auto; font-size: 15px; line-hei
 </ul>
 </li>
 <li id="indent" class="key"><strong>Python は「行のいちばん左」から貼り付けます。</strong><br>
-Python のコードは、行の先頭のスペース（字下げ）もいっしょにコピーされます。VS Code で行の最後で <kbd>Enter</kbd> を押すと、自動で字下げが入ります。そのまま貼り付けると字下げが二重になり、エラーになります。<kbd>Backspace</kbd> で字下げを消して、カーソルを行のいちばん左にしてから貼り付けてください。
+Python のコードは、行の先頭のスペース（字下げ）もいっしょにコピーされます。VS Code で行の最後で <kbd>Enter</kbd> を押すと、自動で字下げが入ります。そのまま貼り付けると字下げが二重になり、エラーになります。<kbd>Backspace</kbd> で字下げを消して、カーソルを行のいちばん左にしてから貼り付けてください。次の行がすでにあるときは、<kbd>Enter</kbd> を押さずに、その行のいちばん左にカーソルを置いて貼り付けることもできます（貼り付けたコードは、その行の上に入ります）。
 <div class="examples">
 <figure class="ex ok"><figcaption>○ 正しい（字下げはスペース4つ）</figcaption><pre>def search_faq(query: str) -&gt; str:
     """社内ITヘルプデスクのFAQを検索する。"""
@@ -141,7 +141,7 @@ Python のコードは、行の先頭のスペース（字下げ）もいっし�
     """社内ITヘルプデスクのFAQを検索する。"""
         query_lower = query.lower()</pre></figure>
 </div>
-貼り付けたら、左端の位置が上の行とそろっているか確かめましょう。</li>
+貼り付けたら、左端の位置が上の行とそろっているか確かめましょう。スライドのコードにある空行は、入れなくても動きます。</li>
 <li>APIキーは、このページには載っていません。講師から共有されたキーは、<code>.env</code> にだけ書いてください。</li>
 </ol>
 </section>
@@ -206,7 +206,7 @@ Python のコードは、行の先頭のスペース（字下げ）もいっし�
 </li>
 <li>緑色の［Code］ボタン →［Download ZIP］をクリックします。</li>
 <li>ダウンロードしたZIPを右クリック →「すべて展開」します。</li>
-<li>展開したフォルダの中の <code>starter_kit</code> を開きます。</li>
+<li>展開したフォルダ（<code>mcp-handson-main</code>）の中の <code>starter_kit</code> を開きます。中に同じ名前のフォルダがもう1つある場合は、先にそれを開きます。</li>
 <li>中身をすべてコピーして、デスクトップの <code>mcp-helpdesk-agent</code> フォルダに貼り付けます。</li>
 </ol>
 <p class="warn"><code>starter_kit</code> フォルダごとではなく、<strong>中身だけ</strong>をコピーしてください。</p>
@@ -230,6 +230,7 @@ Python のコードは、行の先頭のスペース（字下げ）もいっし�
 <div class="bar"><span class="lang">PowerShell</span><span class="cap">VS Code で、いまのフォルダ（mcp-helpdesk-agent）を開く</span><button type="button" class="copy" aria-label="STEP5のPowerShellをコピー">コピー</button></div>
 <pre><code>code .</code></pre>
 </div>
+<p class="note">VS Code に「Do you trust the authors of the files in this folder?」（このフォルダー内のファイルの作成者を信頼しますか？）と聞かれたら、［Yes, I trust the authors］（はい、作成者を信頼します）を押します。</p>
 <p>VS Code で、新しいファイル <code>server.py</code> を作ります（<code>agent_core.py</code> や <code>faq_data.py</code> と同じ場所）。</p>
 <p class="where"><span class="label">貼り付ける位置</span>作った <code>server.py</code>（空のファイル）に貼り付けます。</p>
 <div class="block py" id="b-step5-py" data-newline="1">
@@ -281,15 +282,17 @@ def ping(message: str) -&gt; str:
 <p class="place"><span class="label">場所</span>Azure VM内のPowerShell（<code>(venv)</code> が表示されている状態、<code>mcp-helpdesk-agent</code> フォルダ）</p>
 <div class="block ps" id="b-step9">
 <div class="bar"><span class="lang">PowerShell</span><button type="button" class="copy" aria-label="STEP9のPowerShellをコピー">コピー</button></div>
-<pre><code>npx @modelcontextprotocol/inspector python server.py</code></pre>
+<pre><code>npx @modelcontextprotocol/inspector@2.13.0 python server.py</code></pre>
 </div>
 <p class="note">初回に「Need to install the following packages」と聞かれたら、<kbd>y</kbd> を入力して <kbd>Enter</kbd> を押します。</p>
+<p class="note">しばらくすると、VM内のブラウザで Inspector が開きます。開かないときは、PowerShell に表示された URL をコピーして、VM内のブラウザで開きます。</p>
 <p class="note">このPowerShellは、Inspector が動いている間ふさがります。このあとのコマンドは、VS Code のターミナルで実行します。</p>
 </article>
 <article class="step" id="step10">
 <h3><span class="no">STEP10</span><span>接続してpingを実行する</span></h3>
 <p class="place"><span class="label">場所</span>VM内のブラウザの MCP Inspector の画面</p>
 <p class="nocode">コピーするものはありません。スイッチを ON にして接続し、［Tools］タブの <code>ping</code> を選びます。Message 欄に文字を入力して［Execute Tool］を押し、<code>pong: 〇〇</code> と表示されれば OK です。</p>
+<p class="note">接続できない（Connected にならない）ときは、STEP9 のコマンドを入力した行を見て、先頭に <code>(venv)</code> が付いているか、フォルダが <code>mcp-helpdesk-agent</code> かを確かめます。違っていたら、<kbd>Ctrl</kbd> + <kbd>C</kbd> で止めて、<a href="#step2">STEP2</a> の「デスクトップへ移動」「作成したフォルダへ移動」「仮想環境を有効化」を実行してから、<a href="#step9">STEP9</a> をやり直します。</p>
 </article>
 </section>
 <section class="sec" aria-labelledby="sec3">
@@ -372,7 +375,7 @@ def search_faq(query: str) -&gt; str:
 </article>
 <article class="step" id="faq-7">
 <h3><span class="no">FAQ-7</span><span>完成したsearch_faqを保存・確認する</span></h3>
-<p class="place"><span class="label">場所</span>VS Code のターミナル（［ターミナル］→［新しいターミナル］）</p>
+<p class="place"><span class="label">場所</span>VS Code のターミナル（メニューの［Terminal］→［New Terminal］。日本語表示では［ターミナル］→［新しいターミナル］。メニューに見えないときは、［…］の中にあります）</p>
 <p class="note">先に、VS Code で <code>server.py</code> を保存（<kbd>Ctrl</kbd> + <kbd>S</kbd>）します。</p>
 <div class="block ps" id="b-faq7">
 <div class="bar"><span class="lang">PowerShell</span><button type="button" class="copy" aria-label="FAQ-7のPowerShellをコピー">コピー</button></div>
@@ -424,8 +427,8 @@ def search_faq(query: str) -&gt; str:
 <div class="bar"><span class="lang">PowerShell</span><span class="cap">② VS Code で .env を開く</span><button type="button" class="copy" aria-label="STEP11のPowerShellをコピー">コピー</button></div>
 <pre><code>code .env</code></pre>
 </div>
-<p>③ 開いた <code>.env</code> の <code>your-api-key-here</code> の部分を、講師から共有されたキーに置き換えて、保存（<kbd>Ctrl</kbd> + <kbd>S</kbd>）します。</p>
-<div class="sample"><div class="sample-cap">.env の見本（このページにキーは載せていません）</div><pre>ANTHROPIC_API_KEY=your-api-key-here</pre></div>
+<p>③ 開いた <code>.env</code> の <code>your-api-key-here</code> の部分を、講師から共有されたキーに置き換えて、保存（<kbd>Ctrl</kbd> + <kbd>S</kbd>）します。<code>#</code> で始まる行は説明なので、そのままでかまいません。</p>
+<div class="sample"><div class="sample-cap">.env の中の、書き換える行（このページにキーは載せていません）</div><pre>ANTHROPIC_API_KEY=your-api-key-here</pre></div>
 <p class="warn">キーの前後に、空白や引用符を入れないでください。<code>.env</code> の中身は、画面共有やスクリーンショットに写さないでください。</p>
 </article>
 <article class="step" id="step12">
@@ -482,6 +485,7 @@ def search_faq(query: str) -&gt; str:
 <div class="bar"><span class="lang">入力例</span><button type="button" class="copy" aria-label="STEP16-②の入力例をコピー">コピー</button></div>
 <pre><code>在宅勤務で会社のシステムにアクセスできない</code></pre>
 </div>
+<p class="note">Inspector の画面を閉じてしまったときは、STEP9 を実行した PowerShell で <kbd>Ctrl</kbd> + <kbd>C</kbd> を押して止め、<a href="#step9">STEP9</a> のコマンドをもう一度実行して、スイッチを ON にします。その PowerShell も閉じてしまったときは、新しい PowerShell で <a href="#step2">STEP2</a> の「デスクトップへ移動」「作成したフォルダへ移動」「仮想環境を有効化」を実行してから、STEP9 を実行します。</p>
 </article>
 </section>
 <section class="sec" aria-labelledby="sec5">
